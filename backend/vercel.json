@@ -8,5 +8,5 @@
   ],
   "buildCommand": "node app.js",
   "devCommand": "nodemon app.js",
-  "routes": [{ "src": "/{.*}", "dest": "/" }]
+  "routes": [{ "src": "/(.*)", "dest": "/" }]
 }
