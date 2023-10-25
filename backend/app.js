@@ -5,7 +5,12 @@ const dotenv = require("dotenv")
 const cors = require("cors")
 const multer = require(`multer`)
 
-const { getAllBlog, addBlog, addBlogImg } = require(`./controller/blog`)
+const {
+  getAllBlog,
+  addBlog,
+  addBlogImg,
+  editBlog,
+} = require(`./controller/blog`)
 // configure app to access .env
 dotenv.config()
 
@@ -52,10 +57,7 @@ app.post(
 app.post(`/api/posts/add`, cors(corsOptions), addBlog)
 
 // edit blog
-// app.get(`/get-all`, (req, res) => {
-//   res.send(`Get All`)
-//   console.log(`get all`)
-// })
+app.post(`/api/posts/edit`, cors(corsOptions), editBlog)
 
 // app listen
 app.listen(process.env.PORT, () =>

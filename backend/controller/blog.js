@@ -29,13 +29,30 @@ exports.addBlogImg = async (req, res) => {
 exports.addBlog = async (req, res) => {
   const { title, categories, image, post } = req.body
 
-  const uniqueID = new Date().getTime()
-
   try {
     const blog = await Blog({ title, image, categories, post })
     await blog.save()
 
     res.json(blog)
+  } catch (e) {
+    console.error(e.message)
+  }
+}
+
+exports.editBlog = async (req, res) => {
+  const { id, title, categories, image, post } = req.body
+
+  try {
+    await Blog.findByIdAndUpdate(id, {
+      title,
+      image,
+      categories,
+      post,
+    })
+
+    await Blog.find().then((blogs) =>
+      res.status(201).json({ success: true, blogs })
+    )
   } catch (e) {
     console.error(e.message)
   }

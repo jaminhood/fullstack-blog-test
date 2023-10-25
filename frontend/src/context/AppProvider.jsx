@@ -41,7 +41,35 @@ const AppProvider = (props) => {
     }
   }
 
-  const providerValues = { posts, addPost }
+  const editPost = async (formData, file) => {
+    if (file) {
+      const data = new FormData()
+      data.append("image", file)
+      try {
+        const imgUpload = await axios.post(URL + "api/posts/add-img", data)
+        formData.image = imgUpload.data.url
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    try {
+      await axios
+        .post(URL + "api/posts/edit", formData)
+        .then(({ data }) => {
+          if (data.success === true) {
+            setPosts(data.blogs)
+          }
+        })
+        .catch((e) => console.error(e.message))
+        .finally(() => {
+          navigate("/")
+        })
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  const providerValues = { posts, addPost, editPost }
 
   return (
     <AppContext.Provider value={providerValues}>

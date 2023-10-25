@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 import CreatePost from "./pages/create"
 import AppProvider from "./context/AppProvider"
 import Home from "./pages/home"
+import EditPost from "./pages/edit"
 
 function App() {
   return (
@@ -12,8 +13,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/posts/create" element={<CreatePost />} />
-            <Route path="/posts/post/:id" element={<CreatePost />} />
-            <Route path="/posts/all" element={<Home />} />
+            <Route path="/posts/edit/:id" element={<EditPost />} />
           </Routes>
         </AppProvider>
       </BrowserRouter>

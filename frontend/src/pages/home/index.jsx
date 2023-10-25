@@ -19,7 +19,10 @@ const Home = () => {
         {posts.map((post) => (
           <div className="post-card" key={post._id}>
             <img src={post.image} alt="" className="post-img" />
-            <h4 className="post-title">{post.title}</h4>
+            <div className="flex">
+              <h4 className="post-title">{post.title}</h4>
+              <Link to={`/posts/edit/${post._id}`}>Edit</Link>
+            </div>
             <div className="post-cats">
               ~
               {post.categories.map((cat) => (
