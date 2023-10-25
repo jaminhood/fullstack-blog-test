@@ -3,6 +3,7 @@ import { AppContext } from "./AppContext"
 import { useNavigate } from "react-router-dom"
 import { URL } from "../constants"
 import { useEffect, useState } from "react"
+import Navbar from "../components/Layout/Navbar/Navbar"
 
 const AppProvider = (props) => {
   const navigate = useNavigate()
@@ -73,6 +74,7 @@ const AppProvider = (props) => {
 
   return (
     <AppContext.Provider value={providerValues}>
+      <Navbar />
       {props.children}
     </AppContext.Provider>
   )

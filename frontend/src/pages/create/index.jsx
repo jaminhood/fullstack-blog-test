@@ -1,5 +1,3 @@
-import Navbar from "../../components/Layout/Navbar/Navbar"
-import Footer from "../../components/Layout/Footer/Footer"
 import { ImCross } from "react-icons/im"
 import { useState } from "react"
 import useAppContext from "../../context/useAppContext"
@@ -33,13 +31,10 @@ const CreatePost = () => {
       post: desc,
     }
     await addPost(formData, file)
-    //post upload
-    // console.log(post)
   }
 
   return (
-    <div>
-      <Navbar />
+    <div className="container">
       <div className="create">
         <form className="form-group">
           <h1>Write a post</h1>
@@ -91,7 +86,6 @@ const CreatePost = () => {
           <button onClick={handleCreate}>Create</button>
         </form>
       </div>
-      <Footer />
     </div>
   )
 }

@@ -3,6 +3,22 @@ img {
   object-fit: cover;
 }
 
+textarea {
+  resize: none;
+}
+
+.container {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.posts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
 .create .form-group {
   margin-bottom: 1rem;
   display: flex;
@@ -63,9 +79,6 @@ img {
   width: 100%;
   max-width: 400px;
   padding: 1rem;
-}
-
-.post-card:not(:last-of-type) {
   border-bottom: 0.1rem solid #dddfff;
 }
 

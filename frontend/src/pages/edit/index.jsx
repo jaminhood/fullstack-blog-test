@@ -1,5 +1,3 @@
-import Navbar from "../../components/Layout/Navbar/Navbar"
-import Footer from "../../components/Layout/Footer/Footer"
 import { ImCross } from "react-icons/im"
 import { useEffect, useState } from "react"
 import useAppContext from "../../context/useAppContext"
@@ -52,8 +50,7 @@ const EditPost = () => {
   }
 
   return (
-    <div>
-      <Navbar />
+    <div className="container">
       <div className="create">
         <form className="form-group">
           <h1>Edit post</h1>
@@ -107,7 +104,6 @@ const EditPost = () => {
           <button onClick={handleEdit}>Update</button>
         </form>
       </div>
-      <Footer />
     </div>
   )
 }

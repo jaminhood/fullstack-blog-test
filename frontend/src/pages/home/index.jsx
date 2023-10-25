@@ -1,21 +1,18 @@
 import { Link } from "react-router-dom"
-import Footer from "../../components/Layout/Footer/Footer"
-import Navbar from "../../components/Layout/Navbar/Navbar"
 import useAppContext from "../../context/useAppContext"
 
 const Home = () => {
   const { posts } = useAppContext()
 
   return (
-    <div>
-      <Navbar />
+    <div className="container">
+      <div className="flex">
+        <h1>Posts</h1>
+        <Link to="/posts/create" className="add-btn">
+          Add New
+        </Link>
+      </div>
       <div className="posts">
-        <div className="flex">
-          <h1>Posts</h1>
-          <Link to="/posts/create" className="add-btn">
-            Add New
-          </Link>
-        </div>
         {posts.map((post) => (
           <div className="post-card" key={post._id}>
             <img src={post.image} alt="" className="post-img" />
@@ -33,7 +30,6 @@ const Home = () => {
           </div>
         ))}
       </div>
-      <Footer />
     </div>
   )
 }
