@@ -7,6 +7,11 @@ textarea {
   resize: none;
 }
 
+.error-msg {
+  padding: 0.5rem 2rem;
+  background: #ff000055;
+}
+
 .container {
   width: 100%;
   max-width: 700px;

@@ -3,7 +3,7 @@ import { useState } from "react"
 import useAppContext from "../../context/useAppContext"
 
 const CreatePost = () => {
-  const { addPost } = useAppContext()
+  const { addPost, errorMsg } = useAppContext()
   const [title, setTitle] = useState("")
   const [desc, setDesc] = useState("")
   const [file, setFile] = useState(null)
@@ -83,6 +83,7 @@ const CreatePost = () => {
               placeholder="Write post here"
             />
           </div>
+          {errorMsg !== `` && <p className="error-msg">{errorMsg}</p>}
           <button onClick={handleCreate}>Create</button>
         </form>
       </div>

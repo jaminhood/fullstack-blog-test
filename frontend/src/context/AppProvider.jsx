@@ -8,6 +8,11 @@ import Navbar from "../components/Layout/Navbar/Navbar"
 const AppProvider = (props) => {
   const navigate = useNavigate()
   const [posts, setPosts] = useState([])
+  const [errorMsg, setErrorMsg] = useState(``)
+
+  useEffect(() => {
+    setTimeout(() => setErrorMsg(``), 2000)
+  }, [errorMsg])
 
   useEffect(() => {
     const getPosts = async () => {
@@ -22,23 +27,39 @@ const AppProvider = (props) => {
     if (file) {
       const data = new FormData()
       data.append("image", file)
+
       try {
-        const imgUpload = await axios.post(URL + "api/posts/add-img", data)
-        formData.image = imgUpload.data.url
+        await axios
+          .post(URL + "api/posts/add-img", data)
+          .then((res) => (formData.image = res.data.url))
+          .catch((err) => {
+            if (
+              err.response !== undefined &&
+              err.response.data.includes(`Invalid Image Format`)
+            ) {
+              setErrorMsg(
+                `Invalid Image Format,. only .png,. .jpg and .jpeg allowed!.`
+              )
+            } else {
+              setErrorMsg(err.message)
+            }
+          })
       } catch (err) {
         console.log(err)
       }
     }
-    try {
-      await axios
-        .post(URL + "api/posts/add", formData)
-        .then(({ data }) => {
-          setPosts((prev) => [...prev, data])
-          navigate("/")
-        })
-        .catch((e) => console.error(e.message))
-    } catch (err) {
-      console.error(err)
+    if (formData.image !== undefined) {
+      try {
+        await axios
+          .post(URL + "api/posts/add", formData)
+          .then(({ data }) => {
+            setPosts((prev) => [...prev, data])
+            navigate("/")
+          })
+          .catch((e) => console.error(e.message))
+      } catch (err) {
+        console.error(err)
+      }
     }
   }
 
@@ -46,31 +67,47 @@ const AppProvider = (props) => {
     if (file) {
       const data = new FormData()
       data.append("image", file)
+
       try {
-        const imgUpload = await axios.post(URL + "api/posts/add-img", data)
-        formData.image = imgUpload.data.url
+        await axios
+          .post(URL + "api/posts/add-img", data)
+          .then((res) => (formData.image = res.data.url))
+          .catch((err) => {
+            if (
+              err.response !== undefined &&
+              err.response.data.includes(`Invalid Image Format`)
+            ) {
+              setErrorMsg(
+                `Invalid Image Format,. only .png,. .jpg and .jpeg allowed!.`
+              )
+            } else {
+              setErrorMsg(err.message)
+            }
+          })
       } catch (err) {
         console.log(err)
       }
     }
-    try {
-      await axios
-        .post(URL + "api/posts/edit", formData)
-        .then(({ data }) => {
-          if (data.success === true) {
-            setPosts(data.blogs)
-          }
-        })
-        .catch((e) => console.error(e.message))
-        .finally(() => {
-          navigate("/")
-        })
-    } catch (err) {
-      console.error(err)
+    if (formData.image !== undefined) {
+      try {
+        await axios
+          .post(URL + "api/posts/edit", formData)
+          .then(({ data }) => {
+            if (data.success === true) {
+              setPosts(data.blogs)
+            }
+          })
+          .catch((e) => console.error(e.message))
+          .finally(() => {
+            navigate("/")
+          })
+      } catch (err) {
+        console.error(err)
+      }
     }
   }
 
-  const providerValues = { posts, addPost, editPost }
+  const providerValues = { posts, addPost, editPost, errorMsg }
 
   return (
     <AppContext.Provider value={providerValues}>

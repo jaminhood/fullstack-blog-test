@@ -26,6 +26,16 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
+// Error-handling middleware
+app.use((err, req, res, next) => {
+  console.error(err)
+
+  // Set an appropriate HTTP status code (e.g., 400 for client errors)
+  res
+    .status(400)
+    .json({ error: err.message || "An error occurred during file upload" })
+})
+
 const storage = multer.diskStorage({
   filename: (req, file, cb) => {
     cb(null, file.originalname)
@@ -33,14 +43,19 @@ const storage = multer.diskStorage({
 })
 
 const fileFilter = (req, file, cb) => {
-  if (file.mimetype.startsWith(`image`)) {
+  if (
+    file.mimetype == `image/png` ||
+    file.mimetype == `image/jpg` ||
+    file.mimetype == `image/jpeg`
+  ) {
     cb(null, true)
   } else {
-    cb(`Invalid Image File!`, false)
+    cb(`Invalid Image Format,. only .png,. .jpg and .jpeg allowed!.`, false)
   }
 }
 
-const upload = multer({ storage, fileFilter })
+const maxImgSize = 50 * 1024 * 1024
+const upload = multer({ storage, fileFilter, limits: { fileSize: maxImgSize } })
 
 // get blog
 app.get(`/api/posts/get-all`, cors(corsOptions), getAllBlog)
@@ -50,7 +65,16 @@ app.post(
   `/api/posts/add-img`,
   cors(corsOptions),
   upload.single(`image`),
-  addBlogImg
+  async (req, res) => {
+    upload(req, res, (err) => {
+      if (err instanceof multer.MulterError) {
+        res.send(err)
+      } else if (err) {
+        res.send(err)
+      }
+    })
+    await addBlogImg(req, res)
+  }
 )
 
 // create blog

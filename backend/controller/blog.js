@@ -20,9 +20,9 @@ exports.addBlogImg = async (req, res) => {
       crop: `fill`,
     })
 
-    res.json(img)
+    res.status(200).json(img)
   } catch (e) {
-    console.error(e.message)
+    res.json(e.message)
   }
 }
 
